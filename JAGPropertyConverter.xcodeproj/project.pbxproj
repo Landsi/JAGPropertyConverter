@@ -77,6 +77,8 @@
 		11E60F54160A7436000BD25F /* NumberFormatterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberFormatterTest.m; sourceTree = "<group>"; };
 		11E60F57160B96FE000BD25F /* ExampleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleTest.h; sourceTree = "<group>"; };
 		11E60F58160B96FE000BD25F /* ExampleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleTest.m; sourceTree = "<group>"; };
+		20F9835F1B5E7A03007F93F4 /* JAGPropertyConverter.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = JAGPropertyConverter.podspec; sourceTree = "<group>"; };
+		20F983601B5E7A0B007F93F4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		890F5D3C1B5903D000246901 /* TestModelCustomSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestModelCustomSubclass.h; sourceTree = "<group>"; };
 		890F5D3D1B5903D000246901 /* TestModelCustomSubclass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestModelCustomSubclass.m; sourceTree = "<group>"; };
 		890F5D3F1B59054100246901 /* SubclassCustomPropertyMappingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubclassCustomPropertyMappingTest.m; sourceTree = "<group>"; };
@@ -125,6 +127,8 @@
 				11275B6414E9D56200C4707C /* JAGPropertyConverterTests */,
 				11275B4D14E9D56200C4707C /* Frameworks */,
 				11275B4C14E9D56200C4707C /* Products */,
+				20F9835F1B5E7A03007F93F4 /* JAGPropertyConverter.podspec */,
+				20F983601B5E7A0B007F93F4 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
