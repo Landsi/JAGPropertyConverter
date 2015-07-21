@@ -133,3 +133,11 @@ JAGPropertyConverter was created by [James Gill](https://github.com/jagill/) in 
 
 JAGPropertyConverter is available under the MIT license. See the LICENSE file for more info.
 
+## Changelog
+
+### HEAD
+
+### 1.0.0
+2015-07-21 **MAL**
+
+* First release
