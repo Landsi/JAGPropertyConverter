@@ -19,6 +19,9 @@
  TestModelCustomNilSubclass     // returns nil mapping
      ^
      |
+ TestModelCustomBaseSubclass    // has some mapping using property from current class
+     ^
+     |
  TestModelCustomSubclass        // has some mapping
  
  Resulting mappings dict/array should contain all from all classes (TestModel + TestModelCustomNilSubclass + TestModelCustomSubclass)
@@ -43,7 +46,7 @@
         return [TestModelCustomSubclass class];
     };
     self.converter.convertFromEnum = ^NSString *(NSString *propertyName, id propertyValue, Class parentClass) {
-        if ([propertyName isEqualToString:@"subclassEnumProperty"] || [propertyName isEqualToString:@"customMappedProperty"]) {
+        if ([propertyName isEqualToString:@"subclassEnumProperty"] || [propertyName isEqualToString:@"customMappedProperty"] || [propertyName isEqualToString:@"baseEnumProperty"]) {
             NSNumber *value = (NSNumber *) propertyValue;
             
             switch (value.integerValue) {
@@ -59,13 +62,16 @@
     self.converter.convertToEnum = ^NSInteger (NSString *propertyName, id propertyValue, Class parentClass) {
         NSString *str = (NSString *)propertyValue;
         
-        if ([str isEqualToString:@"no"] && parentClass == TestModelCustomSubclass.class) {
+        if ([propertyName isEqualToString:@"subclassEnumProperty"] || [propertyName isEqualToString:@"enumProperty2"] || [propertyName isEqualToString:@"baseEnumPropertyInJson"]) {
+            if ([str isEqualToString:@"no"]) {
+                return TestModelEnumTypeA;
+            }
+            if ([str isEqualToString:@"juhu"]) {
+                return TestModelEnumTypeB;
+            }
             return TestModelEnumTypeA;
         }
-        if ([str isEqualToString:@"juhu"] && parentClass == TestModelCustomSubclass.class) {
-            return TestModelEnumTypeB;
-        }
-        return TestModelEnumTypeA;
+        return 0;
     };
 }
 
@@ -84,6 +90,9 @@
     XCTAssertEqualObjects(dict[@"enumProperty2"], @"juhu");
     XCTAssertNil(dict[@"ignoreProperty2"]);
     
+    // mapping from base subclass
+    XCTAssertEqualObjects(dict[@"baseEnumPropertyInJson"], @"juhu");
+    
     // mapping from subclass
     XCTAssertNil(dict[@"subclassIgnoreProperty"], @"this value should be ignored");
     XCTAssertEqualObjects(dict[@"differentSubclassCustomMapped"], @"custom mapped");
@@ -96,6 +105,9 @@
                             @"ignoreProperty" : @"ignore me",
                             @"ignoreProperty2" : @"ignore me",
                             
+                            // bas subclass
+                            @"baseEnumPropertyInJson" : @"juhu",
+                            
                             // subclass values
                             @"subclassIgnoreProperty" : @"also ignore me",
                             @"differentSubclassCustomMapped" : @"custom mapped",
@@ -104,14 +116,17 @@
     
     TestModelCustomSubclass *resultModel = [self.converter composeModelFromObject:dict];
 
-    XCTAssertEqualObjects(resultModel.differentNameProperty, @"very different", @"");
-    XCTAssertEqual(resultModel.customMappedProperty, TestModelEnumTypeB, @"");
+    XCTAssertEqualObjects(resultModel.differentNameProperty, @"very different");
+    XCTAssertEqual(resultModel.customMappedProperty, TestModelEnumTypeB);
     XCTAssertNil(resultModel.ignoreProperty, @"should be ignored");
     XCTAssertNil(resultModel.customMappedIgnoreProperty, @"should be ignored");
     
+    // base subclass
+    XCTAssertEqual(resultModel.baseEnumProperty, TestModelEnumTypeB);
+    
     // subclass
-    XCTAssertEqualObjects(resultModel.subclassCustomMapped, @"custom mapped", @"");
-    XCTAssertEqual(resultModel.subclassEnumProperty, TestModelEnumTypeA, @"");
+    XCTAssertEqualObjects(resultModel.subclassCustomMapped, @"custom mapped");
+    XCTAssertEqual(resultModel.subclassEnumProperty, TestModelEnumTypeA);
     XCTAssertNil(resultModel.subclassIgnoreProperty, @"should be ignored");
 }
 
@@ -137,6 +152,9 @@
     self.model.differentNameProperty = @"very different";
     self.model.customMappedProperty = TestModelEnumTypeB;
     self.model.customMappedIgnoreProperty = @"surely ignore me";
+    
+    // base subclass
+    self.model.baseEnumProperty = TestModelEnumTypeB;
     
     // subclass
     self.model.subclassEnumProperty = TestModelEnumTypeA;

@@ -14,11 +14,34 @@
 #pragma mark - JAGPropertyMapping
 
 + (NSDictionary *)customPropertyNamesMapping {
-    return nil;
+    return self.enumPropertiesToConvert;        // there was a bug where such a statement didn't work (RIME-2554)
 }
 
 + (NSDictionary *)enumPropertiesToConvert {
     return nil;
+}
+
++ (NSArray *)ignorePropertiesFromJSON {
+    return nil;
+}
+
++ (NSArray *)ignorePropertiesToJSON {
+    return nil;
+}
+
+@end
+
+// This class returns a mapping using a property from current class
+@implementation TestModelCustomBaseSubclass
+
+#pragma mark - JAGPropertyMapping
+
++ (NSDictionary *)customPropertyNamesMapping {
+    return nil;
+}
+
++ (NSDictionary *)enumPropertiesToConvert {
+    return @{ @"baseEnumProperty" : @"baseEnumPropertyInJson" };
 }
 
 + (NSArray *)ignorePropertiesFromJSON {

@@ -12,7 +12,13 @@
 
 @end
 
-@interface TestModelCustomSubclass : TestModelCustomNilSubclass
+@interface TestModelCustomBaseSubclass : TestModelCustomNilSubclass
+
+@property (nonatomic, assign) TestModelEnum baseEnumProperty;
+
+@end
+
+@interface TestModelCustomSubclass : TestModelCustomBaseSubclass
 
 @property (nonatomic, assign) TestModelEnum subclassEnumProperty;
 @property (nonatomic, copy) NSString *subclassIgnoreProperty;
